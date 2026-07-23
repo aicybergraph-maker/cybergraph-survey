@@ -1,0 +1,1348 @@
+{
+  "title": "CyberGraph AI \u2014 Cybersecurity Posture Survey",
+  "sections": [
+    {
+      "code": "A",
+      "name": "Organisation Profile",
+      "icon": "domain"
+    },
+    {
+      "code": "B",
+      "name": "Security Tool Inventory",
+      "icon": "security"
+    },
+    {
+      "code": "C",
+      "name": "Tool Integration & Correlation",
+      "icon": "hub"
+    },
+    {
+      "code": "D",
+      "name": "Security Architecture",
+      "icon": "architecture"
+    },
+    {
+      "code": "E",
+      "name": "Backup & Recovery Maturity",
+      "icon": "backup"
+    },
+    {
+      "code": "F",
+      "name": "Posture & Risk Visibility",
+      "icon": "visibility"
+    },
+    {
+      "code": "G",
+      "name": "Incident Response Practice",
+      "icon": "emergency"
+    },
+    {
+      "code": "H",
+      "name": "CyberGraph AI Concept Validation",
+      "icon": "science"
+    },
+    {
+      "code": "I",
+      "name": "Strategic Intelligence",
+      "icon": "insights"
+    }
+  ],
+  "pillars": [
+    "GOVERN",
+    "IDENTIFY",
+    "PROTECT",
+    "DETECT",
+    "RESPOND",
+    "RECOVER"
+  ],
+  "questions": [
+    {
+      "key": "q1_sector",
+      "section": "A",
+      "sectionName": "Organisation Profile",
+      "pillar": "ALL",
+      "text": "What is your organisation's primary industry sector?",
+      "why": "Sector determines regulatory obligations (PCI-DSS for finance, HIPAA for healthcare, NIS2 for critical infrastructure) and attack profile. CyberGraph AI's first design partners will likely be financial services or healthcare \u2014 this confirms which vertical to prioritise.",
+      "type": "multi",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "Financial Services / Banking",
+        "Healthcare / Pharmaceuticals",
+        "Critical Infrastructure / Energy / Utilities",
+        "Government / Public Sector",
+        "Technology / SaaS",
+        "Manufacturing / Industrial",
+        "Retail / E-commerce",
+        "Professional Services",
+        "Education",
+        "Other"
+      ]
+    },
+    {
+      "key": "q2_org_size",
+      "section": "A",
+      "sectionName": "Organisation Profile",
+      "pillar": "ALL",
+      "text": "Approximately how many employees does your organisation have \u2014 and across how many countries/sites do you operate?",
+      "why": "Organisation size and geographic spread determine tool complexity, SOC maturity, and budget. The CyberGraph AI sweet spot is 500\u20135,000 employees with multi-site complexity \u2014 enough tool sprawl to feel the pain, not so large that a 12-month sales cycle is the minimum.",
+      "type": "text",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q3_tool_count",
+      "section": "A",
+      "sectionName": "Organisation Profile",
+      "pillar": "ALL",
+      "text": "How many distinct security tools does your organisation currently operate? (Approximate count is fine)",
+      "why": "The ESG research baseline is 45\u201375 tools for mid-enterprise. This number directly validates Gap 1 in the CyberGraph AI problem statement. A respondent with 10 tools is not the target. One with 40+ is.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "1\u201310 tools",
+        "11\u201325 tools",
+        "26\u201345 tools",
+        "46\u201375 tools",
+        "75+ tools"
+      ]
+    },
+    {
+      "key": "q4_compliance_frameworks",
+      "section": "A",
+      "sectionName": "Organisation Profile",
+      "pillar": "ALL",
+      "text": "What compliance frameworks are currently mandatory for your organisation? (Select all that apply)",
+      "why": "Regulatory obligations are the primary budget-creation event for enterprise security. The SEC 4-day rule, NIS2, and DORA are live forcing functions that CyberGraph AI directly addresses. This tells us which compliance outputs to prioritise in the MVP.",
+      "type": "multi",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "PCI-DSS",
+        "HIPAA",
+        "GDPR",
+        "ISO 27001",
+        "SOC 2",
+        "NIS2 / DORA",
+        "NIST CSF",
+        "CERT-In",
+        "DPDP Act 2023",
+        "SEBI CSCRF",
+        "Other"
+      ]
+    },
+    {
+      "key": "q5_cloud_platforms",
+      "section": "A",
+      "sectionName": "Organisation Profile",
+      "pillar": "ALL",
+      "text": "Which cloud platforms does your organisation use \u2014 and roughly what % of workloads are cloud-based?",
+      "why": "Cloud platform mix determines which integrations CyberGraph AI must build first. AWS + Azure account for 75% of enterprise cloud. Cloud percentage also indicates how much IDENTIFY signal comes from cloud APIs vs. on-premises scanners.",
+      "type": "multi",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "AWS",
+        "Azure",
+        "GCP",
+        "Oracle Cloud",
+        "Private Cloud only",
+        "Hybrid (cloud + on-prem)",
+        "None \u2014 fully on-premises"
+      ]
+    },
+    {
+      "key": "q6_virtualisation",
+      "section": "A",
+      "sectionName": "Organisation Profile",
+      "pillar": "ALL",
+      "text": "What virtualisation platforms are in use? (Select all that apply)",
+      "why": "Virtualisation platforms are primary asset sources. VMware vSphere is present in 85%+ of regulated enterprises and is the most important asset inventory source for on-premises environments. This determines the IDENTIFY pillar connector priority.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": [
+        "VMware vSphere / ESXi",
+        "Microsoft Hyper-V",
+        "Nutanix",
+        "KVM",
+        "AWS EC2",
+        "Azure VMs",
+        "Google Compute Engine",
+        "None"
+      ]
+    },
+    {
+      "key": "q7_edr",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "DETECT",
+      "text": "EDR / Endpoint Protection: Which solution(s) are deployed \u2014 and is it deployed on 100% of endpoints?",
+      "why": "EDR is the primary DETECT-pillar signal source for CyberGraph AI. CrowdStrike and Microsoft Defender are the most common \u2014 both have APIs CyberGraph AI integrates with. Coverage gaps (not 100% deployed) are a posture indicator in their own right.",
+      "type": "multi",
+      "required": true,
+      "allowSkip": false,
+      "weight": 1.5,
+      "options": [
+        "CrowdStrike Falcon \u2014 100% coverage",
+        "CrowdStrike Falcon \u2014 partial coverage",
+        "SentinelOne Singularity \u2014 100% coverage",
+        "SentinelOne Singularity \u2014 partial coverage",
+        "Microsoft Defender for Endpoint \u2014 100% coverage",
+        "Microsoft Defender for Endpoint \u2014 partial coverage",
+        "Carbon Black",
+        "Trend Micro",
+        "Sophos",
+        "Symantec / Broadcom",
+        "Other",
+        "None deployed"
+      ]
+    },
+    {
+      "key": "q8_siem",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "DETECT",
+      "text": "SIEM: Which platform \u2014 and how many log sources feed it?",
+      "why": "SIEM is the central aggregation point whose data CyberGraph AI enriches with graph topology and organisational hierarchy. Microsoft Sentinel and Splunk are the most important integration targets. 'None' identifies organisations with a critical visibility gap.",
+      "type": "multi",
+      "required": true,
+      "allowSkip": false,
+      "weight": 1.5,
+      "options": [
+        "Microsoft Sentinel",
+        "Splunk Enterprise",
+        "Splunk Cloud",
+        "IBM QRadar",
+        "Exabeam",
+        "LogRhythm",
+        "Elastic SIEM",
+        "Google Chronicle",
+        "Sumo Logic",
+        "None \u2014 no SIEM deployed"
+      ]
+    },
+    {
+      "key": "q9_soar",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "RESPOND",
+      "text": "SOAR: Is SOAR implemented? If yes, which platform? (Palo Alto XSOAR/XSIAM, Splunk SOAR, Microsoft Sentinel Playbooks, ServiceNow SecOps, Swimlane, Tines, None)",
+      "why": "SOAR is the action layer where CyberGraph AI's agentic response would execute. Organisations without SOAR have no automated response capability \u2014 a significant pain point. XSOAR and Sentinel Playbooks are the most common CyberGraph integration targets.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q10_xdr",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "DETECT",
+      "text": "XDR: Is an Extended Detection & Response (XDR) platform in use? If yes, which? (CrowdStrike XDR, Microsoft Defender XDR, Palo Alto Cortex XDR, SentinelOne Singularity XDR, Trend Vision One)",
+      "why": "XDR represents the current market attempt to solve correlation \u2014 but does so within one vendor's ecosystem. The XDR user who still has cross-vendor correlation gaps is the CyberGraph AI target customer.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q11_malware_scanning",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "DETECT",
+      "text": "Malware Scanning & AV: What AV / malware scanning tools are deployed \u2014 and which specifically scan backup data?",
+      "why": "Malware scanning of backup data is a critical RECOVER-pillar signal. Most organisations scan endpoints but not backup snapshots. Organisations without backup scanning are at high risk of restoring infected data \u2014 a core use case CyberGraph AI addresses.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Microsoft Defender AV",
+        "Symantec / Broadcom",
+        "McAfee / Trellix",
+        "Trend Micro",
+        "Malwarebytes",
+        "CrowdStrike on-demand scan",
+        "Cohesity DataHawk (scans backup data)",
+        "Commvault ThreatScan (scans backup data)",
+        "Rubrik Threat Monitoring (scans backup data)",
+        "None"
+      ]
+    },
+    {
+      "key": "q12_dlp",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "PROTECT",
+      "text": "Data Loss Prevention (DLP): Is DLP deployed? Which platform? (Microsoft Purview, Symantec DLP, Forcepoint, Digital Guardian, Nightfall, Zscaler DLP, None)",
+      "why": "DLP protects the exfiltration stage of the Kill Chain. DLP signals \u2014 policy violations, large data movements \u2014 are PROTECT-pillar inputs for CyberGraph AI risk scoring. 'None' represents a major data security gap in regulated environments.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q13_dspm",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "IDENTIFY",
+      "text": "Data Security Posture Management (DSPM): Is DSPM implemented? Which tool? (Rubrik DSPM, Varonis, BigID, Cyera, Securiti, Dig Security, None)",
+      "why": "DSPM discovers sensitive data and maps access exposure. DSPM data is a primary IDENTIFY-pillar input for CyberGraph AI. Most mid-market organisations do not have standalone DSPM \u2014 making it a gap CyberGraph AI can help surface through backup metadata analysis.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q14_vulnerability_mgmt",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "IDENTIFY",
+      "text": "Vulnerability Management: Which scanner(s) are in use \u2014 and is scanning continuous or periodic?",
+      "why": "Vulnerability data is the most important IDENTIFY-pillar signal. Tenable is the dominant platform and is the Phase 2 connector target in CyberGraph AI's roadmap. Continuous vs. periodic scanning tells us how fresh the posture data would be.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.5,
+      "options": [
+        "Tenable / Nessus (continuous)",
+        "Tenable / Nessus (periodic)",
+        "Qualys VMDR",
+        "Rapid7 InsightVM",
+        "Microsoft Defender for Servers",
+        "Wiz",
+        "Orca",
+        "OpenVAS",
+        "None"
+      ]
+    },
+    {
+      "key": "q15_iam",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "PROTECT",
+      "text": "Identity & Access Management: Which IAM/PAM platforms are deployed? (Select all that apply)",
+      "why": "Identity platforms are the PROTECT-pillar foundation. CyberArk, Okta, and Entra ID are the highest-value integration targets. Identity signals \u2014 privileged access, dormant accounts, federation gaps \u2014 are core inputs to CyberGraph AI's PROTECT-pillar risk scoring.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Microsoft Entra ID / Azure AD",
+        "Okta",
+        "Ping Identity",
+        "CyberArk",
+        "BeyondTrust",
+        "Delinea",
+        "SailPoint",
+        "Saviynt",
+        "HashiCorp Vault",
+        "Silverfort",
+        "None"
+      ]
+    },
+    {
+      "key": "q16_network_security",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "PROTECT",
+      "text": "Network Security: What network security tools are deployed? (Select all that apply)",
+      "why": "Network security tools generate traffic and policy data for PROTECT-pillar scoring. NGFW logs are a key telemetry source. Zscaler and Cloudflare indicate Zero Trust network architecture maturity.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Palo Alto NGFW",
+        "Fortinet FortiGate",
+        "Check Point",
+        "Cisco Firepower",
+        "Zscaler ZIA",
+        "Cloudflare",
+        "Akamai",
+        "AWS WAF",
+        "Azure Firewall",
+        "None"
+      ]
+    },
+    {
+      "key": "q17_asset_mgmt",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "IDENTIFY",
+      "text": "Asset Management / CAASM: Is a dedicated asset management or CAASM platform deployed? (Axonius, Armis, Lansweeper, Sevco, JupiterOne, ServiceNow CMDB, Qualys CSAM, None)",
+      "why": "CAASM is the most direct competitor category for CyberGraph AI's IDENTIFY pillar. Axonius users already understand asset identity aggregation \u2014 they are the easiest to upsell on graph-propagated risk scoring. 'None' means the pain is likely felt but unaddressed.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q18_backup",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "RECOVER",
+      "text": "Backup & Data Protection: Which backup/data protection platform(s) are in use? (Select all that apply)",
+      "why": "Backup platform is the most critical CyberGraph AI plugin partner. Rubrik, Cohesity, and Commvault generate RECOVER-pillar signals. Veeam is the most widely deployed in mid-market \u2014 and currently has no security intelligence layer.",
+      "type": "multi",
+      "required": true,
+      "allowSkip": false,
+      "weight": 1.5,
+      "options": [
+        "Rubrik",
+        "Cohesity",
+        "Commvault",
+        "Veeam",
+        "Veritas NetBackup",
+        "Dell EMC / Avamar",
+        "IBM Spectrum Protect",
+        "Zerto",
+        "Druva",
+        "Native cloud snapshots only",
+        "None"
+      ]
+    },
+    {
+      "key": "q19_dr_orchestration",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "RECOVER",
+      "text": "Disaster Recovery: What DR orchestration platform is in use? (Select all that apply)",
+      "why": "DR orchestration is the RECOVER pillar's operational layer. Organisations without orchestration have untested, manually executed recovery plans \u2014 a core resilience gap. CyberGraph AI's RECOVER score drops significantly for organisations with no tested DR.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.5,
+      "options": [
+        "Cohesity SiteContinuity",
+        "Rubrik Orchestrated Recovery",
+        "Commvault Runbooks",
+        "Zerto",
+        "VMware Site Recovery Manager",
+        "Veeam DR",
+        "AWS Elastic Disaster Recovery",
+        "Azure Site Recovery",
+        "Manual / None"
+      ]
+    },
+    {
+      "key": "q20_cspm",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "IDENTIFY",
+      "text": "Cloud Security Posture (CSPM / CNAPP): Is CSPM deployed? Which tool? (Wiz, Orca Security, Prisma Cloud, Microsoft Defender for Cloud, AWS Security Hub, Lacework, Aqua Security, None)",
+      "why": "CSPM is a direct adjacent competitor. Wiz users already have cloud IDENTIFY coverage \u2014 CyberGraph AI adds on-premises, backup, and RECOVER coverage they lack. 'None' means the organisation is flying blind on cloud misconfigurations.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q21_tip",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "DETECT",
+      "text": "Threat Intelligence Platform (TIP): Is a TIP in use \u2014 and how is threat intel currently operationalised? (Anomali, Mandiant, Recorded Future, MISP, ThreatConnect, OpenCTI, None)",
+      "why": "TIP data enriches alert context. CyberGraph AI's plugin framework can ingest TIP data as a signal source, enriching graph node risk scores with threat actor context. Organisations without a TIP rely on SIEM vendor-bundled intelligence \u2014 typically inadequate.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q22_itsm",
+      "section": "B",
+      "sectionName": "Security Tool Inventory",
+      "pillar": "ALL",
+      "text": "ITSM / Ticketing: What ITSM platform manages security incidents and change control?",
+      "why": "ITSM integration is how CyberGraph AI's risk findings translate into remediation tickets. ServiceNow is the dominant enterprise platform and the highest-priority ITSM integration target. Change records from ITSM are inputs to configuration drift detection.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": [
+        "ServiceNow",
+        "Jira Service Management",
+        "BMC Remedy",
+        "Freshservice",
+        "PagerDuty",
+        "Other"
+      ]
+    },
+    {
+      "key": "q23_asset_correlation",
+      "section": "C",
+      "sectionName": "Tool Integration & Correlation",
+      "pillar": "ALL",
+      "text": "When the same physical or virtual server appears in multiple security tools (e.g., by hostname in CrowdStrike, by IP in your firewall, by ARN in AWS, by CI record in ServiceNow) \u2014 how do analysts currently correlate these as the same asset?",
+      "why": "This is CyberGraph AI's founding problem \u2014 asset identity fragmentation. The answer reveals whether the pain is felt, how it is currently 'solved' (manual spreadsheets, tribal knowledge, or nothing), and whether the organisation is ready to pay for a solution.",
+      "type": "text",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q24_cross_tool_correlation_time",
+      "section": "C",
+      "sectionName": "Tool Integration & Correlation",
+      "pillar": "DETECT",
+      "text": "When a security event requires correlation across multiple tools (e.g., matching a Tenable vulnerability finding with a CrowdStrike EDR alert on the same host) \u2014 how long does this typically take an analyst, and is it a manual process?",
+      "why": "This quantifies the operational cost of cross-tool correlation failure. Answers of '30+ minutes per event' or 'it's manual and error-prone' are direct evidence of the problem CyberGraph AI solves. This also establishes the ROI basis for the platform.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": []
+    },
+    {
+      "key": "q25_missed_detection_incident",
+      "section": "C",
+      "sectionName": "Tool Integration & Correlation",
+      "pillar": "DETECT",
+      "text": "Have you experienced an incident where an attack was NOT detected in time because signals were present in multiple tools but nobody connected them? (Yes/No \u2014 if yes, brief description without naming specifics)",
+      "why": "This is the '21-day dwell time' problem in personal experience form. A 'Yes' answer is the most powerful design partner validation possible. Even a 'No' with a 'close call' story confirms the problem is felt.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": true
+    },
+    {
+      "key": "q26_unified_posture_view",
+      "section": "C",
+      "sectionName": "Tool Integration & Correlation",
+      "pillar": "ALL",
+      "text": "How do you currently generate a unified view of your organisation's security posture \u2014 one that a board member or regulator could look at and understand your actual risk in 60 seconds?",
+      "why": "This tests whether any existing solution answers the CISO's morning question. Most will answer 'manual reports', 'PowerPoint every quarter', or 'we don't really have one'. Each of these is a direct statement of the problem CyberGraph AI solves.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q27_tool_integration_score",
+      "section": "C",
+      "sectionName": "Tool Integration & Correlation",
+      "pillar": "ALL",
+      "text": "On a scale of 1\u20135, how well do your current security tools share telemetry with each other \u2014 where 1 = completely siloed and 5 = fully integrated with shared context?",
+      "why": "Integration maturity directly predicts pain level. Score of 1\u20132 = high pain, strong CyberGraph AI candidate. Score of 4\u20135 = lower immediate pain, but likely achieved through expensive custom integration work CyberGraph AI could have replaced.",
+      "type": "scale5",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": [
+        "Completely siloed \u2014 no integration",
+        "Minimal sharing via manual exports",
+        "Some integration \u2014 2\u20133 tools connected",
+        "Mostly integrated \u2014 some manual gaps remain",
+        "Fully integrated with shared context"
+      ]
+    },
+    {
+      "key": "q28_board_reporting_time",
+      "section": "C",
+      "sectionName": "Tool Integration & Correlation",
+      "pillar": "GOVERN",
+      "text": "When a board member or regulator asks 'what is your security posture today?' \u2014 how long does it take your team to assemble an accurate answer, and what sources do you pull from?",
+      "why": "The SEC 4-day material incident disclosure rule makes this question urgent and compliance-driven. An honest answer of 'days of manual work' confirms the regulatory urgency that CyberGraph AI addresses.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": []
+    },
+    {
+      "key": "q29_cloud_architecture",
+      "section": "D",
+      "sectionName": "Security Architecture",
+      "pillar": "PROTECT",
+      "text": "How is your cloud security designed? Select the model that best applies.",
+      "why": "Cloud security architecture maturity maps directly to ZTA adoption \u2014 a key signal in the CyberGraph AI PROTECT pillar scoring. Organisations at level 1\u20132 have significant exposure. Level 4\u20135 organisations are likely already investing in posture platforms.",
+      "type": "scale5",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Perimeter-only \u2014 no cloud-specific controls",
+        "Perimeter + some cloud controls",
+        "Separate cloud security team with CSPM",
+        "Zero Trust architecture in progress",
+        "Full ZTA \u2014 identity-centric access control"
+      ]
+    },
+    {
+      "key": "q30_microsegmentation",
+      "section": "D",
+      "sectionName": "Security Architecture",
+      "pillar": "PROTECT",
+      "text": "Is network microsegmentation implemented in your environment? If yes, which technology? (VMware NSX, Illumio, Guardicore/Akamai, Cisco TrustSec, Cloud-native security groups only, Not implemented)",
+      "why": "Microsegmentation directly limits lateral movement blast radius \u2014 a core PROTECT-pillar control. The tool used also determines what network topology data CyberGraph AI can ingest. 'Not implemented' is a major PROTECT gap that CyberGraph AI's scoring would surface prominently.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q31_asset_inventory_quality",
+      "section": "D",
+      "sectionName": "Security Architecture",
+      "pillar": "IDENTIFY",
+      "text": "Does your organisation maintain a documented, up-to-date asset inventory that accurately reflects your real-time environment \u2014 including cloud, SaaS, and OT assets?",
+      "why": "Asset inventory completeness is the foundation of the IDENTIFY pillar and a prerequisite for CyberGraph AI's universal asset identity resolver. Poor inventory quality is the most common reason posture platforms struggle with early customers.",
+      "type": "scale5",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "No formal inventory",
+        "Partial \u2014 major assets only, rarely updated",
+        "Reasonable \u2014 most assets, updated quarterly",
+        "Near-complete \u2014 most assets updated monthly",
+        "Comprehensive real-time inventory across cloud, SaaS, OT"
+      ]
+    },
+    {
+      "key": "q32_ot_iot",
+      "section": "D",
+      "sectionName": "Security Architecture",
+      "pillar": "IDENTIFY",
+      "text": "How are OT (Operational Technology) / ICS / IoT assets managed from a security perspective?",
+      "why": "OT/ICS assets are a major identity fragmentation source \u2014 they often have no standard identifiers and no agent-based monitoring. CyberGraph AI's universal identity resolver must handle OT asset identifiers (Purdue model levels, PLCs, SCADA systems).",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Fully air-gapped from IT",
+        "Partially connected with monitoring",
+        "Integrated into the main security stack",
+        "No OT/IoT present"
+      ]
+    },
+    {
+      "key": "q33_soc_structure",
+      "section": "D",
+      "sectionName": "Security Architecture",
+      "pillar": "DETECT",
+      "text": "Describe your SOC structure.",
+      "why": "SOC structure determines how CyberGraph AI's output is consumed. A 24/7 internal SOC can act on real-time alerts. An MSSP-dependent SOC needs reports and scheduled analysis. No SOC = CyberGraph AI's output needs to be more prescriptive and actionable by non-analysts.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Internal 24/7 SOC",
+        "Business-hours-only internal SOC",
+        "Managed SOC / MSSP",
+        "Co-managed SOC",
+        "Virtual SOC with on-call only",
+        "No dedicated SOC"
+      ]
+    },
+    {
+      "key": "q34_attack_coverage",
+      "section": "D",
+      "sectionName": "Security Architecture",
+      "pillar": "DETECT",
+      "text": "Is your organisation's detection coverage formally mapped to the MITRE ATT&CK framework \u2014 and if so, what percentage of ATT&CK techniques do you estimate you have detection rules for?",
+      "why": "ATT&CK coverage mapping is a DETECT-pillar maturity indicator. Organisations with ATT&CK mapping understand posture by technique. CyberGraph AI can enrich ATT&CK coverage analysis by propagating gap risk through the asset graph.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q35_backup_isolation",
+      "section": "E",
+      "sectionName": "Backup & Recovery Maturity",
+      "pillar": "RECOVER",
+      "text": "Is your backup infrastructure isolated from your production network \u2014 and does your backup admin team operate under separate credentials from your IT admin team?",
+      "why": "Backup isolation and credential separation are the two most important controls preventing ransomware from destroying backup data before detonation. Most organisations answer 'partially' \u2014 which means an attacker with domain admin can reach the backup server.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 2.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q36_backup_malware_scanning",
+      "section": "E",
+      "sectionName": "Backup & Recovery Maturity",
+      "pillar": "RECOVER",
+      "text": "Are backup snapshots currently scanned for malware before use in recovery? If yes, which tool performs the scan \u2014 and does it scan all snapshots or only recent ones?",
+      "why": "Malware scanning of backup data is the defining capability separating modern cyber resilience platforms from legacy backup tools. Most Veeam and legacy backup users have no scanning. This is the core CyberGraph AI RECOVER-pillar signal gap.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 2.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q37_recovery_test",
+      "section": "E",
+      "sectionName": "Backup & Recovery Maturity",
+      "pillar": "RECOVER",
+      "text": "Has your organisation tested recovery from backup in the last 12 months \u2014 and did the actual recovery time meet your stated RTO?",
+      "why": "Untested recovery plans are fictional documents. Most organisations that test discover their actual RTO is 3\u201310x their stated target. This question surfaces a painful truth that creates buying urgency for orchestrated recovery solutions.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.5,
+      "options": [
+        "Yes, tested and met RTO",
+        "Yes, tested but significantly exceeded RTO",
+        "Partial test only \u2014 not end-to-end",
+        "Not tested in 12+ months"
+      ]
+    },
+    {
+      "key": "q38_ire_availability",
+      "section": "E",
+      "sectionName": "Backup & Recovery Maturity",
+      "pillar": "RECOVER",
+      "text": "Is an Isolated Recovery Environment (IRE / Cleanroom) available for safe recovery validation and forensic investigation during an incident \u2014 either on-premises or as a cloud-on-demand service?",
+      "why": "IRE capability is the gold standard for cyber recovery. Organisations without an IRE cannot safely validate clean restore points without risking reinfection. This directly validates Cohesity/Rubrik/Commvault as plugin partner targets.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 2.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q39_immutable_storage",
+      "section": "E",
+      "sectionName": "Backup & Recovery Maturity",
+      "pillar": "RECOVER",
+      "text": "Are your most critical backup snapshots protected by immutable storage with retention locks \u2014 where even a compromised administrator cannot delete them without MPA approval?",
+      "why": "Immutable storage with MPA is the definitive protection against backup deletion attacks. Organisations with Rubrik, Cohesity FortKnox, or Commvault Air Gap Protect are likely covered. Veeam-only shops typically are not.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 2.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q40_recovery_confidence",
+      "section": "E",
+      "sectionName": "Backup & Recovery Maturity",
+      "pillar": "RECOVER",
+      "text": "On a scale of 1\u201310, how confident are you that a clean, malware-free backup snapshot exists right now for your most critical production system \u2014 and what is that confidence based on? (automated scanning, manual assumption, never verified)",
+      "why": "This is the single most important recovery confidence question. Most respondents answer 8\u20139 based on faith, not verification. The follow-up reveals whether confidence is based on automated threat scanning or assumption \u2014 a mismatch is the most powerful design partner conversation opener.",
+      "type": "scale_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 2.0,
+      "options": [
+        "1 \u2014 No confidence",
+        "2",
+        "3",
+        "4",
+        "5 \u2014 Moderate confidence",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10 \u2014 Absolute confidence"
+      ]
+    },
+    {
+      "key": "q41_pillar_self_assessment",
+      "section": "F",
+      "sectionName": "Posture & Risk Visibility",
+      "pillar": "GOVERN",
+      "text": "Which NIST CSF pillars does your current security toolset give you the best visibility into \u2014 and which pillar do you feel you have the worst coverage for? Rate each: GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER as Good / Partial / Poor.",
+      "why": "This directly tests the CyberGraph AI founding thesis: that existing tools cover 1\u20132 pillars well and leave others blind. RECOVER will almost universally be rated Poor. DETECT is usually rated best. The gap pattern validates the all-five-pillar value proposition.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "GOVERN \u2014 Good",
+        "GOVERN \u2014 Partial",
+        "GOVERN \u2014 Poor",
+        "IDENTIFY \u2014 Good",
+        "IDENTIFY \u2014 Partial",
+        "IDENTIFY \u2014 Poor",
+        "PROTECT \u2014 Good",
+        "PROTECT \u2014 Partial",
+        "PROTECT \u2014 Poor",
+        "DETECT \u2014 Good",
+        "DETECT \u2014 Partial",
+        "DETECT \u2014 Poor",
+        "RESPOND \u2014 Good",
+        "RESPOND \u2014 Partial",
+        "RESPOND \u2014 Poor",
+        "RECOVER \u2014 Good",
+        "RECOVER \u2014 Partial",
+        "RECOVER \u2014 Poor"
+      ]
+    },
+    {
+      "key": "q42_board_reporting_cadence",
+      "section": "F",
+      "sectionName": "Posture & Risk Visibility",
+      "pillar": "GOVERN",
+      "text": "How is your security risk currently communicated to executive leadership and the board \u2014 and how frequently?",
+      "why": "Board reporting cadence reflects both governance maturity and urgency. The SEC 4-day rule makes 'only after incidents' legally dangerous. Real-time dashboards are aspirational for most \u2014 which is exactly what CyberGraph AI provides.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Real-time dashboard \u2014 always current",
+        "Weekly or monthly automated report",
+        "Quarterly presentation",
+        "Only after significant incidents",
+        "Not formally reported to board"
+      ]
+    },
+    {
+      "key": "q43_kpi_tracking",
+      "section": "F",
+      "sectionName": "Posture & Risk Visibility",
+      "pillar": "GOVERN",
+      "text": "Are cybersecurity KPIs formally tracked? (Select all that apply)",
+      "why": "KPI tracking reflects measurement maturity. CyberGraph AI can auto-generate most of these metrics from its graph. Organisations that track none are flying blind \u2014 but may not yet be ready for a sophisticated posture platform.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "MTTD (Mean Time to Detect)",
+        "MTTR (Mean Time to Respond)",
+        "Patch SLA compliance %",
+        "% endpoints with EDR coverage",
+        "Open critical CVEs (unpatched)",
+        "Backup RTO/RPO attainment",
+        "ATT&CK coverage %",
+        "None formally tracked"
+      ]
+    },
+    {
+      "key": "q44_risk_quantification",
+      "section": "F",
+      "sectionName": "Posture & Risk Visibility",
+      "pillar": "IDENTIFY",
+      "text": "Do you use quantitative risk assessment (such as FAIR) to financially model security risk \u2014 or does your risk assessment use qualitative ratings (High/Medium/Low) only?",
+      "why": "FAIR or equivalent quantitative risk methodology produces board-defensible risk statements. The SEC 4-day rule requires material breach assessment \u2014 impossible without financial risk quantification. CyberGraph AI's posture score can feed FAIR models directly.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "FAIR quantitative risk modelling",
+        "Qualitative ratings (High/Medium/Low) only",
+        "Hybrid \u2014 qualitative with some financial modelling",
+        "No formal risk assessment process"
+      ]
+    },
+    {
+      "key": "q45_alert_fatigue",
+      "section": "F",
+      "sectionName": "Posture & Risk Visibility",
+      "pillar": "DETECT",
+      "text": "Is alert fatigue a significant challenge in your SOC \u2014 and approximately what percentage of alerts generated by your SIEM are actioned vs. dismissed without investigation?",
+      "why": "Alert fatigue is the #1 operational challenge in enterprise SOCs. The ratio of actioned to total alerts is the key SIEM health metric. CyberGraph AI's graph-based risk prioritisation reduces false positives by providing topology context.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": true
+    },
+    {
+      "key": "q46_ctem_adoption",
+      "section": "F",
+      "sectionName": "Posture & Risk Visibility",
+      "pillar": "IDENTIFY",
+      "text": "Is CTEM (Continuous Threat Exposure Management) formally adopted in your organisation \u2014 or are you actively evaluating CTEM tools?",
+      "why": "CTEM is the Gartner-named category that creates budget for CyberGraph AI. Organisations already evaluating CTEM are the warmest buyers. 'Not familiar' organisations need education \u2014 they are design partners for a later stage.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Fully adopted \u2014 CTEM is part of our programme",
+        "Actively evaluating CTEM tools",
+        "Aware but not currently evaluating",
+        "Not familiar with CTEM"
+      ]
+    },
+    {
+      "key": "q47_ir_playbooks",
+      "section": "G",
+      "sectionName": "Incident Response Practice",
+      "pillar": "RESPOND",
+      "text": "Are scenario-specific IR playbooks maintained for: Ransomware, Business Email Compromise, Cloud breach, Insider threat, Supply chain attack?",
+      "why": "Scenario-specific playbooks are a RESPOND-pillar maturity indicator. Organisations with only a generic IR plan have low RESPOND pillar scores. CyberGraph AI's compliance output can map playbook gaps to regulatory requirements.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes \u2014 scenario-specific playbooks for all five",
+        "Partial \u2014 ransomware + 1\u20132 others",
+        "Ransomware playbook only",
+        "Generic IR plan only \u2014 no scenario specifics",
+        "None"
+      ]
+    },
+    {
+      "key": "q48_tabletop_exercise",
+      "section": "G",
+      "sectionName": "Incident Response Practice",
+      "pillar": "RESPOND",
+      "text": "When was the last time a full incident response tabletop exercise was conducted with executive participation \u2014 and was a ransomware scenario included?",
+      "why": "Untested IR plans produce extended breach dwell times. Tabletop exercises with executive participation are rare \u2014 most organisations run technical-only drills. This question surfaces the gap between documented IR capability and actual IR readiness.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Within last 6 months \u2014 included ransomware scenario",
+        "Within last 6 months \u2014 generic scenario",
+        "6\u201312 months ago",
+        "Over 12 months ago",
+        "Never conducted a formal tabletop"
+      ]
+    },
+    {
+      "key": "q49_recovery_bottleneck",
+      "section": "G",
+      "sectionName": "Incident Response Practice",
+      "pillar": "RESPOND",
+      "text": "If a major ransomware event started right now, which single step in your response process would create the most delay \u2014 and why?",
+      "why": "This question reverse-engineers the specific bottleneck in the recovery workflow. The most common answer ('finding a clean backup') directly validates the RECOVER pillar. Each answer maps to a different CyberGraph AI pillar value proposition.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Identifying the initial scope",
+        "Isolating affected systems",
+        "Finding a clean backup",
+        "Getting executive sign-off to act",
+        "Notifying regulators within required timeframe",
+        "Rebuilding systems from scratch"
+      ]
+    },
+    {
+      "key": "q50_rca_process",
+      "section": "G",
+      "sectionName": "Incident Response Practice",
+      "pillar": "RESPOND",
+      "text": "Is Root Cause Analysis (RCA) completed before restoring systems from backup after every significant incident \u2014 and is there a documented RCA process?",
+      "why": "RCA before restore is the single most important prevention against ransomware re-infection. Organisations that restore without RCA face 30\u201350% re-infection rates within 90 days. This is a RESPOND-pillar gap that CyberGraph AI's posture scoring can flag as a critical control deficiency.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q51_dr_drill",
+      "section": "G",
+      "sectionName": "Incident Response Practice",
+      "pillar": "RECOVER",
+      "text": "How are Disaster Recovery drills currently conducted \u2014 and how often?",
+      "why": "DR drill type and frequency tell us whether the RECOVER pillar is real or aspirational. Full failover tests are rare. Cleanroom testing is the gold standard. 'Not tested' is the most common answer \u2014 directly validating CyberGraph AI's RECOVER-pillar scoring gap.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 1.5,
+      "options": [
+        "Full failover test (\u2265 annually)",
+        "Isolated parallel test / cleanroom (\u2265 annually)",
+        "Tabletop walkthrough only",
+        "Partial system tests \u2014 not full stack",
+        "Not tested in the past 12 months"
+      ]
+    },
+    {
+      "key": "q52_problem_recognition",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "PROBLEM FRAMING: 'The same server appears under a different identifier in every security tool your team uses. Correlating these manually consumes analyst time and causes incidents to be missed.' \u2014 On a scale of 1\u20135, how accurately does this describe a pain your team experiences?",
+      "why": "This directly tests Gap 3 (asset identity fragmentation) recognition. Score of 4\u20135 = target customer who immediately recognises the pain. Score of 1\u20132 = either solved already or not felt at this organisation.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "Does not describe us at all",
+        "Rarely experienced",
+        "Occasionally experienced",
+        "Frequently experienced",
+        "Exactly describes our daily reality"
+      ]
+    },
+    {
+      "key": "q53_posture_gap_recognition",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "POSTURE GAP: 'Your SIEM covers DETECT. Your vulnerability scanner covers IDENTIFY. But nobody computes your security posture from all five NIST pillars simultaneously \u2014 especially RECOVER.' \u2014 How much do you agree with this description of your current tool coverage?",
+      "why": "This tests the five-pillar posture gap hypothesis. Agreement on RECOVER being uncovered is nearly universal. Agreement that nobody synthesises all five is the core CyberGraph AI value proposition.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "Do not agree",
+        "Partially agree \u2014 some pillars covered",
+        "Mostly agree \u2014 clear gaps exist",
+        "Strongly agree \u2014 RECOVER is a blind spot",
+        "This is precisely our situation \u2014 all five are fragmented"
+      ]
+    },
+    {
+      "key": "q54_concept_value",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "CONCEPT TEST: 'A platform that automatically resolves every asset to one canonical identity across all your tools, then computes a continuously updated risk score at asset, department, and organisation level \u2014 mapped to all five NIST pillars.' \u2014 How valuable would this be to your organisation?",
+      "why": "This is the core CyberGraph AI value proposition in plain language. High scores (4\u20135) confirm the concept resonates.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "No value",
+        "Some value \u2014 nice to have",
+        "Meaningful value \u2014 would use it",
+        "High value \u2014 would prioritise evaluation",
+        "Critical capability \u2014 would buy now if available"
+      ]
+    },
+    {
+      "key": "q55_pilot_requirements",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "DIFFERENTIATION TEST: What would a platform like this need to do \u2014 or prove \u2014 before you would consider bringing it into your environment for a pilot? List your top 2\u20133 requirements.",
+      "why": "This is the most valuable design partner question. Answers reveal the minimum viable feature set for a pilot, the trust barriers, and the proof points needed. These answers directly shape the 90-day prototype scope.",
+      "type": "text",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q56_recover_intelligence_value",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "RECOVERY INTELLIGENCE: 'The platform analyses your backup metadata to determine which snapshots are clean, when malware first appeared in your environment, and what your actual clean recovery point is \u2014 before an incident forces you to find out.' \u2014 How valuable is this specific capability?",
+      "why": "This tests the RECOVER pillar differentiator \u2014 the capability that no SIEM, XDR, or CSPM provides. High scores (4\u20135) validate the backup-as-security-intelligence thesis.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "No value",
+        "Some value",
+        "Meaningful value",
+        "High value \u2014 very relevant to our situation",
+        "Critical capability \u2014 game-changer for our recovery readiness"
+      ]
+    },
+    {
+      "key": "q57_explainability_requirement",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "EXPLAINABILITY: 'The platform shows you not just the risk score, but WHY \u2014 which specific signals drove the score, which attack paths are open, and what the specific remediation steps are.' \u2014 Is explainability a requirement for adoption in your organisation?",
+      "why": "Explainability is CyberGraph AI's stated technical risk. GNNs are black boxes. This question tells us whether the target customer actually requires explainability or whether the risk score alone is sufficient.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "Not required \u2014 trust the score",
+        "Nice to have",
+        "Moderately important",
+        "Very important \u2014 auditors would ask",
+        "Absolute requirement \u2014 cannot adopt without full explainability"
+      ]
+    },
+    {
+      "key": "q58_deployment_model",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "DEPLOYMENT MODEL: 'The platform runs a data collector inside your environment \u2014 raw security data never leaves your network. Only computed risk scores and graph metadata are sent to the cloud intelligence layer.' \u2014 Does this deployment model address your data sovereignty concerns?",
+      "why": "Data sovereignty and privacy are the primary enterprise security barriers to adopting new platforms. The hybrid model (data plane on-prem, intelligence in cloud) is specifically designed to address this.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "Does not address concerns \u2014 need fully on-prem",
+        "Partially addresses",
+        "Mostly addresses",
+        "Fully addresses \u2014 acceptable model",
+        "Perfect model \u2014 preferred approach for our environment"
+      ]
+    },
+    {
+      "key": "q59_no_rip_replace",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "INTEGRATION APPROACH: 'The platform integrates with your existing tools via a plugin framework \u2014 it does not replace CrowdStrike, Sentinel, Tenable, or your backup platform. It makes all of them smarter.' \u2014 How important is the 'no rip-and-replace' positioning to your willingness to evaluate a new platform?",
+      "why": "The 'above and alongside' positioning is CyberGraph AI's key objection-handling argument. This tests whether non-displacement is a genuine buying criterion.",
+      "type": "scale5",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "Not important \u2014 we replace tools regularly",
+        "Slightly important",
+        "Moderately important",
+        "Very important \u2014 we protect existing investments",
+        "Critical \u2014 displacement of current tools would be a blocker"
+      ]
+    },
+    {
+      "key": "q60_design_partner_interest",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "DESIGN PARTNER INTEREST: Would you be willing to participate as a design partner \u2014 providing read-only API access to your tool environment and biweekly feedback sessions over 3 months \u2014 to co-design this platform? This is a research partnership, not a commercial commitment.",
+      "why": "This is the conversion question. A 'Yes' or 'Interested, tell me more' is a design partner lead. Design partner LOI by month 9 is the first major startup milestone.",
+      "type": "yn_text",
+      "required": true,
+      "allowSkip": false,
+      "weight": 0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": false
+    },
+    {
+      "key": "q61_budget_decision_maker",
+      "section": "H",
+      "sectionName": "CyberGraph AI Concept Validation",
+      "pillar": "ALL",
+      "text": "BUDGET & BUYING: Who in your organisation would be the primary decision-maker for a security posture intelligence platform \u2014 and is budget for this capability currently allocated, planned, or unplanned?",
+      "why": "Decision-maker identification and budget status are the two sales qualification questions. CISO as decision-maker with allocated budget = highest priority prospect.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q62_capability_wish",
+      "section": "I",
+      "sectionName": "Strategic Intelligence",
+      "pillar": "ALL",
+      "text": "What is the single most important security capability you wish you had today that you currently lack \u2014 the one that, if implemented, would most significantly reduce your risk?",
+      "why": "This is the unconstrained product roadmap question. Verbatim answers reveal genuine buying intent separated from survey framing effects.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q63_investment_priority",
+      "section": "I",
+      "sectionName": "Strategic Intelligence",
+      "pillar": "ALL",
+      "text": "Which of the following best describes your organisation's immediate security investment priority for the next 12 months?",
+      "why": "Investment priority directly maps to buying intent timing. 'Recovery & resilience' and 'AI-powered analytics' are the highest-alignment answers for CyberGraph AI.",
+      "type": "multi",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": [
+        "Identity security",
+        "Cloud security posture",
+        "Detection & response capability",
+        "Recovery & resilience",
+        "Compliance automation",
+        "AI-powered security analytics",
+        "Reducing tool sprawl / consolidation",
+        "Other"
+      ]
+    },
+    {
+      "key": "q64_incident_experience",
+      "section": "I",
+      "sectionName": "Strategic Intelligence",
+      "pillar": "ALL",
+      "text": "Has your organisation experienced a significant security incident (ransomware, major breach, supply chain compromise) in the last 3 years? And if yes, which control gap was most significant in allowing the incident to occur?",
+      "why": "Post-incident CISOs are the highest-urgency buyers. A 'Yes' with a described control gap is the most valuable design partner signal.",
+      "type": "yn_text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": [
+        "Yes",
+        "No",
+        "Partially",
+        "N/A"
+      ],
+      "yesIsRisk": true
+    },
+    {
+      "key": "q65_morning_question",
+      "section": "I",
+      "sectionName": "Strategic Intelligence",
+      "pillar": "ALL",
+      "text": "If you could have one question answered automatically every morning when you open your laptop \u2014 one question about your security posture \u2014 what would it be?",
+      "why": "This is the 'CISO morning question' that CyberGraph AI's founders cite as the founding problem. Collecting actual answers across 20+ respondents produces the definitive problem statement for investor pitches and product positioning.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q66_backup_platform_gaps",
+      "section": "I",
+      "sectionName": "Strategic Intelligence",
+      "pillar": "ALL",
+      "text": "What tools or capabilities do you wish your current backup/data protection platform provided that it currently does not?",
+      "why": "This surfaces the gap between what backup platforms provide today and what CISOs actually want. Common answers: security scanning, anomaly detection, SIEM integration, faster clean point identification. Each answer maps to a CyberGraph AI RECOVER-pillar feature.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": []
+    },
+    {
+      "key": "q67_india_regulatory",
+      "section": "I",
+      "sectionName": "Strategic Intelligence",
+      "pillar": "ALL",
+      "text": "Are there any specific regulatory or compliance requirements \u2014 from CERT-In, DPDP Act 2023, RBI, SEBI CSCRF, IRDAI, or sector-specific mandates \u2014 that you are struggling to meet with current tools? Please describe the specific gap.",
+      "why": "India-specific regulatory requirements (CERT-In 6-hour reporting, DPDP Act 2023) are under-served by global tools. This surfaces India-specific compliance gaps that CyberGraph AI can address in the local market.",
+      "type": "text",
+      "required": false,
+      "allowSkip": true,
+      "weight": 0,
+      "options": []
+    }
+  ]
+}
