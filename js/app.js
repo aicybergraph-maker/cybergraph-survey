@@ -6,7 +6,17 @@ let sectionsQuestions = {}; // code -> [questions]
 let pages = []; // ['contact', 'A', 'B', ..., 'results']
 let pageIndex = 0;
 let answers = {}; // key -> answer object
-let contact = { fullName: '', email: '', company: '', jobTitle: '', phone: '' };
+let contact = {
+  fullName: '',
+  email: '',
+  company: '',
+  jobTitle: '',
+  country: '',
+  phone: '',
+  linkedin: '',
+  anonymous: false,
+  consent: false,
+};
 
 function escapeHtml(str) {
   const div = document.createElement('div');
@@ -72,10 +82,16 @@ function renderProgress() {
   }
 }
 
-function questionField(q) {
+function questionField(q, number) {
   const answer = answers[q.key] || {};
   const requiredMark = q.required ? '<span class="required">*</span>' : '';
   const skipMark = !q.required && q.allowSkip ? `<button type="button" class="btn-skip" data-key="${q.key}">Skip</button>` : '';
+  const infoIcon = q.why
+    ? `<span class="info-icon" tabindex="0" role="button" aria-label="Why we ask this">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11.5"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span class="info-tooltip">${escapeHtml(q.why)}</span>
+      </span>`
+    : '';
   let inputHtml = '';
 
   if (q.type === 'text') {
@@ -84,7 +100,7 @@ function questionField(q) {
     inputHtml = q.options
       .map((opt, i) => {
         const checked = (answer.selected || []).includes(i) ? 'checked' : '';
-        return `<label class="choice"><input type="checkbox" class="qa-input" data-kind="multi" data-key="${q.key}" data-index="${i}" ${checked}> ${escapeHtml(opt)}</label>`;
+        return `<label class="choice"><input type="checkbox" class="qa-input" data-kind="multi" data-key="${q.key}" data-index="${i}" ${checked}><span class="choice-text">${escapeHtml(opt)}</span></label>`;
       })
       .join('');
   } else {
@@ -92,7 +108,7 @@ function questionField(q) {
     inputHtml = q.options
       .map((opt, i) => {
         const checked = answer.index === i ? 'checked' : '';
-        return `<label class="choice"><input type="radio" class="qa-input" data-kind="single" name="${q.key}" data-key="${q.key}" data-index="${i}" ${checked}> ${escapeHtml(opt)}</label>`;
+        return `<label class="choice"><input type="radio" class="qa-input" data-kind="single" name="${q.key}" data-key="${q.key}" data-index="${i}" ${checked}><span class="choice-text">${escapeHtml(opt)}</span></label>`;
       })
       .join('');
   }
@@ -101,48 +117,110 @@ function questionField(q) {
   return `
     <div class="question ${skippedClass}" data-question-key="${q.key}">
       <div class="question-head">
-        <p class="question-text">${escapeHtml(q.text)} ${requiredMark}</p>
+        <p class="question-text"><span class="q-number">${number}</span>${escapeHtml(q.text)} ${requiredMark}${infoIcon}</p>
         ${skipMark}
       </div>
-      ${q.why ? `<p class="question-why">${escapeHtml(q.why)}</p>` : ''}
       <div class="question-input">${inputHtml}</div>
       ${answer.skipped ? '<p class="skipped-note">Skipped</p>' : ''}
     </div>
   `;
 }
 
+const SECTION_ICON_PATHS = {
+  domain: '<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 21v-4h6v4M9 7h.01M9 11h.01M9 15h.01M15 7h.01M15 11h.01M15 15h.01"/>',
+  security: '<path d="M12 2 4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/>',
+  hub: '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M12 7.5v4M9.5 17 11 12M14.5 17 13 12"/>',
+  architecture: '<path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6"/>',
+  backup: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/><path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>',
+  visibility: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+  emergency: '<path d="M12 9v4M12 17h.01"/><path d="m4.5 19 7-13a1.7 1.7 0 0 1 3 0l7 13a1.7 1.7 0 0 1-1.5 2.5h-14A1.7 1.7 0 0 1 4.5 19Z"/>',
+  science: '<path d="M9 3h6M10 3v6l-5.5 9.5A1.5 1.5 0 0 0 5.8 21h12.4a1.5 1.5 0 0 0 1.3-2.5L14 9V3"/><path d="M8 15h8"/>',
+  insights: '<path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/>',
+};
+
+function sectionIconSvg(iconName) {
+  const paths = SECTION_ICON_PATHS[iconName] || SECTION_ICON_PATHS.domain;
+  return `<svg class="section-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+}
+
 function renderSectionPage(code) {
   const section = surveyData.sections.find((s) => s.code === code);
   const questions = sectionsQuestions[code];
   return `
-    <h2>${escapeHtml(section.name)}</h2>
-    ${questions.map(questionField).join('')}
+    <h2 class="section-title">${sectionIconSvg(section.icon)}${escapeHtml(section.name)}</h2>
+    ${questions.map((q, i) => questionField(q, i + 1)).join('')}
   `;
 }
 
 function renderContactPage() {
-  return `
-    <h2>Your information</h2>
-    <p class="section-intro">Tell us who to attribute this assessment to. This is saved alongside your risk score.</p>
+  const isAnon = contact.anonymous;
+
+  const personalFieldsHtml = `
     <div class="field">
-      <label>Full name <span class="required">*</span></label>
-      <input type="text" id="c-fullName" value="${escapeHtml(contact.fullName)}">
+      <label>Full Name <span class="required">*</span></label>
+      <input type="text" id="c-fullName" placeholder="Jane Smith" value="${escapeHtml(contact.fullName)}">
     </div>
     <div class="field">
-      <label>Email <span class="required">*</span></label>
-      <input type="email" id="c-email" value="${escapeHtml(contact.email)}">
+      <label>Work Email <span class="required">*</span></label>
+      <input type="email" id="c-email" placeholder="jane@example.com" value="${escapeHtml(contact.email)}">
     </div>
     <div class="field">
-      <label>Company / Organisation <span class="required">*</span></label>
-      <input type="text" id="c-company" value="${escapeHtml(contact.company)}">
+      <label>Organisation <span class="required">*</span></label>
+      <input type="text" id="c-company" placeholder="Acme Corp" value="${escapeHtml(contact.company)}">
     </div>
-    <div class="field">
-      <label>Job title</label>
-      <input type="text" id="c-jobTitle" value="${escapeHtml(contact.jobTitle)}">
+    <div class="field-row">
+      <div class="field">
+        <label>Job Title</label>
+        <input type="text" id="c-jobTitle" placeholder="CISO" value="${escapeHtml(contact.jobTitle)}">
+      </div>
+      <div class="field">
+        <label>Country</label>
+        <input type="text" id="c-country" placeholder="United Kingdom" value="${escapeHtml(contact.country)}">
+      </div>
     </div>
     <div class="field">
       <label>Phone</label>
-      <input type="text" id="c-phone" value="${escapeHtml(contact.phone)}">
+      <input type="text" id="c-phone" placeholder="+44 7700 900000" value="${escapeHtml(contact.phone)}">
+    </div>
+    <div class="field">
+      <label>LinkedIn URL</label>
+      <input type="text" id="c-linkedin" placeholder="https://linkedin.com/in/..." value="${escapeHtml(contact.linkedin)}">
+    </div>
+  `;
+
+  return `
+    <h2>Start your assessment</h2>
+    <p class="section-intro">Fill in your details to receive a personalised report, or enable anonymous mode to skip all personal fields.</p>
+
+    <div class="toggle-card">
+      <label class="toggle-switch">
+        <input type="checkbox" id="c-anonymous" ${isAnon ? 'checked' : ''}>
+        <span class="toggle-slider"></span>
+      </label>
+      <div class="toggle-copy">
+        <div class="toggle-label-row">
+          <span class="toggle-label">Participate anonymously</span>
+          ${isAnon ? '<span class="badge-active">Active</span>' : ''}
+        </div>
+        <p class="toggle-hint">${
+          isAnon
+            ? 'Your name, email, and contact details will not be collected.'
+            : 'Enable to hide all personal information from your submission.'
+        }</p>
+      </div>
+    </div>
+
+    ${isAnon ? '' : personalFieldsHtml}
+
+    <div class="consent-card">
+      <label class="consent-row">
+        <input type="checkbox" id="c-consent" ${contact.consent ? 'checked' : ''}>
+        <span>
+          I understand my answers are processed entirely in this browser to generate my risk report —
+          nothing is sent to a server. A CSV file with my answers${isAnon ? '' : ' and contact details'}
+          will be downloaded to my device when I finish.
+        </span>
+      </label>
     </div>
   `;
 }
@@ -211,6 +289,35 @@ function bindPageEvents(code) {
     return;
   }
 
+  if (code === 'contact') {
+    const anonToggle = document.getElementById('c-anonymous');
+    anonToggle.addEventListener('change', () => {
+      if (!contact.anonymous) {
+        // capture whatever was typed before switching into anonymous mode
+        contact.fullName = document.getElementById('c-fullName').value.trim();
+        contact.email = document.getElementById('c-email').value.trim();
+        contact.company = document.getElementById('c-company').value.trim();
+        contact.jobTitle = document.getElementById('c-jobTitle').value.trim();
+        contact.country = document.getElementById('c-country').value.trim();
+        contact.phone = document.getElementById('c-phone').value.trim();
+        contact.linkedin = document.getElementById('c-linkedin').value.trim();
+      }
+      contact.consent = document.getElementById('c-consent').checked;
+      contact.anonymous = anonToggle.checked;
+      if (contact.anonymous) {
+        contact.fullName = '';
+        contact.email = '';
+        contact.company = '';
+        contact.jobTitle = '';
+        contact.country = '';
+        contact.phone = '';
+        contact.linkedin = '';
+      }
+      renderPage();
+    });
+    return;
+  }
+
   const container = document.getElementById('page-container');
 
   container.querySelectorAll('.qa-input').forEach((el) => {
@@ -251,13 +358,26 @@ function bindPageEvents(code) {
 function validateCurrentPage() {
   const code = pages[pageIndex];
   if (code === 'contact') {
-    contact.fullName = document.getElementById('c-fullName').value.trim();
-    contact.email = document.getElementById('c-email').value.trim();
-    contact.company = document.getElementById('c-company').value.trim();
-    contact.jobTitle = document.getElementById('c-jobTitle').value.trim();
-    contact.phone = document.getElementById('c-phone').value.trim();
-    if (!contact.fullName || !contact.email || !contact.company) {
-      alert('Please fill in your name, email, and company before continuing.');
+    contact.anonymous = document.getElementById('c-anonymous').checked;
+    contact.consent = document.getElementById('c-consent').checked;
+
+    if (!contact.anonymous) {
+      contact.fullName = document.getElementById('c-fullName').value.trim();
+      contact.email = document.getElementById('c-email').value.trim();
+      contact.company = document.getElementById('c-company').value.trim();
+      contact.jobTitle = document.getElementById('c-jobTitle').value.trim();
+      contact.country = document.getElementById('c-country').value.trim();
+      contact.phone = document.getElementById('c-phone').value.trim();
+      contact.linkedin = document.getElementById('c-linkedin').value.trim();
+
+      if (!contact.fullName || !contact.email || !contact.company) {
+        alert('Please fill in your name, work email, and organisation before continuing.');
+        return false;
+      }
+    }
+
+    if (!contact.consent) {
+      alert('Please confirm the consent checkbox before continuing.');
       return false;
     }
     return true;
@@ -307,13 +427,22 @@ function saveSubmission(submission) {
 function updateNavButtons(code) {
   const backBtn = document.getElementById('btn-back');
   const nextBtn = document.getElementById('btn-next');
-  backBtn.style.visibility = pageIndex === 0 ? 'hidden' : 'visible';
+  nextBtn.classList.remove('btn-full');
+
   if (code === 'results') {
     nextBtn.style.display = 'none';
     backBtn.style.display = 'none';
+    return;
+  }
+
+  nextBtn.style.display = 'inline-block';
+
+  if (code === 'contact' && contact.anonymous) {
+    backBtn.style.display = 'none';
+    nextBtn.textContent = 'Start Anonymous Survey';
+    nextBtn.classList.add('btn-full');
   } else {
-    nextBtn.style.display = 'inline-block';
-    backBtn.style.display = 'inline-block';
+    backBtn.style.display = pageIndex === 0 ? 'none' : 'inline-block';
     const isLastSection = pages[pageIndex + 1] === 'results';
     nextBtn.textContent = isLastSection ? 'Finish & See Results' : 'Next';
   }
