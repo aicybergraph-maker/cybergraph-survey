@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CyberGraph AI — Submission History</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Submission History</h1>
+    <nav>
+      <a href="index.html">← Back to survey</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <p class="hint">
+      This list is stored in this browser only (via localStorage) — it won't show submissions
+      made from other devices or browsers.
+    </p>
+
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Submitted</th>
+          <th>Name</th>
+          <th>Company</th>
+          <th>Risk Score</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="history-body"></tbody>
+    </table>
+
+    <p id="empty-state" class="hint" hidden>No submissions yet.</p>
+
+    <section id="detail-section" class="card" hidden>
+      <h2>Submission detail</h2>
+      <div id="detail-body"></div>
+    </section>
+  </main>
+
+  <script src="js/scoring.js"></script>
+  <script src="js/csv.js"></script>
+  <script src="js/history.js"></script>
+</body>
+</html>
