@@ -8,25 +8,104 @@
 </head>
 <body>
   <header class="topbar">
-    <h1 id="survey-title">CyberGraph AI Risk Survey</h1>
+    <div class="lp-brand">
+      <span class="lp-brand-icon">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      <span class="lp-brand-name">CyberGraph AI</span>
+    </div>
     <nav>
       <a href="history.html">View submission history →</a>
     </nav>
   </header>
 
-  <div class="progress-wrap">
-    <div class="progress-track"><div id="progress-bar" class="progress-fill"></div></div>
-    <div id="progress-label" class="progress-label"></div>
-  </div>
-
-  <main class="container">
-    <div id="page-container"></div>
-
-    <div class="nav-buttons">
-      <button type="button" id="btn-back" class="btn-secondary">Back</button>
-      <button type="button" id="btn-next" class="btn-primary">Next</button>
+  <section id="landing-view">
+    <div class="lp-hero">
+      <span class="lp-badge">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 2 2.9 6.5 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7L2 9.1l7.1-.6z"/></svg>
+        NIST CSF 2.0 Assessment
+      </span>
+      <h1 class="lp-headline">
+        Understand your security posture<br />
+        <span class="lp-headline-accent">in 30 minutes</span>
+      </h1>
+      <p class="lp-subtext">
+        Answer 67 targeted questions across all NIST CSF 2.0 domains and get an instant,
+        personalised risk score with actionable recommendations — downloaded straight to
+        your device as a CSV report.
+      </p>
+      <button type="button" id="btn-start-survey" class="btn-primary lp-cta">
+        Start Survey
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <p class="lp-trust">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        Nothing you enter is sent to a server — your answers stay in this browser until you download them.
+      </p>
     </div>
-  </main>
+
+    <div class="lp-pillars-strip">
+      <div class="lp-pillars-label">Covers all NIST CSF 2.0 pillars</div>
+      <div class="lp-pillars-row">
+        <span class="lp-chip lp-chip-govern">GOVERN</span>
+        <span class="lp-chip lp-chip-identify">IDENTIFY</span>
+        <span class="lp-chip lp-chip-protect">PROTECT</span>
+        <span class="lp-chip lp-chip-detect">DETECT</span>
+        <span class="lp-chip lp-chip-respond">RESPOND</span>
+        <span class="lp-chip lp-chip-recover">RECOVER</span>
+      </div>
+    </div>
+
+    <div class="lp-features">
+      <h2 class="lp-features-title">What you get</h2>
+      <div class="lp-feature-grid">
+        <div class="lp-feature-card">
+          <span class="lp-feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <h3>NIST CSF 2.0 Aligned</h3>
+          <p>67 questions mapped to the six NIST Cybersecurity Framework pillars.</p>
+        </div>
+        <div class="lp-feature-card">
+          <span class="lp-feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg>
+          </span>
+          <h3>Instant Risk Score</h3>
+          <p>An overall 0–100 risk score plus a breakdown across all six pillars the moment you finish.</p>
+        </div>
+        <div class="lp-feature-card">
+          <span class="lp-feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          </span>
+          <h3>CSV Report, Yours to Keep</h3>
+          <p>Your answers and score are packaged into a CSV file and downloaded straight to your device.</p>
+        </div>
+        <div class="lp-feature-card">
+          <span class="lp-feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 4 6 8-6 8"/><path d="m13 4 6 8-6 8"/></svg>
+          </span>
+          <h3>Skip What Doesn't Apply</h3>
+          <p>Optional questions can be skipped individually — only required questions block progress.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="wizard-view" hidden>
+    <div class="progress-wrap">
+      <div class="progress-track"><div id="progress-bar" class="progress-fill"></div></div>
+      <div id="progress-label" class="progress-label"></div>
+    </div>
+
+    <main class="container">
+      <div id="page-container"></div>
+
+      <div class="nav-buttons">
+        <button type="button" id="btn-back" class="btn-secondary">Back</button>
+        <button type="button" id="btn-next" class="btn-primary">Next</button>
+      </div>
+    </main>
+  </div>
 
   <script src="js/scoring.js"></script>
   <script src="js/csv.js"></script>

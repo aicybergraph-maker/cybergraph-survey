@@ -14,17 +14,42 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+let initError = null;
+const initPromise = init();
+
 async function init() {
-  const res = await fetch('js/questions.json', { cache: 'no-store' });
-  surveyData = await res.json();
-  document.getElementById('survey-title').textContent = surveyData.title;
+  try {
+    const res = await fetch('js/questions.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status} loading js/questions.json`);
+    surveyData = await res.json();
 
-  surveyData.sections.forEach((s) => {
-    sectionsQuestions[s.code] = surveyData.questions.filter((q) => q.section === s.code);
-  });
-  pages = ['contact', ...surveyData.sections.map((s) => s.code), 'results'];
+    surveyData.sections.forEach((s) => {
+      sectionsQuestions[s.code] = surveyData.questions.filter((q) => q.section === s.code);
+    });
+    pages = ['contact', ...surveyData.sections.map((s) => s.code), 'results'];
+  } catch (e) {
+    initError = e;
+  }
+}
 
-  renderPage();
+function renderInitError() {
+  document.getElementById('progress-label').textContent = '';
+  document.getElementById('progress-bar').style.width = '0%';
+  document.getElementById('btn-back').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('page-container').innerHTML = `
+    <div class="question">
+      <p class="question-text">Could not load the survey questions.</p>
+      <p class="question-why">
+        This usually means the page was opened directly as a file (a "file://" URL) instead of
+        through a web server, which browsers block for security reasons. Serve this folder over
+        HTTP instead — for example: <code>python3 -m http.server 8080</code> — then open
+        <code>http://localhost:8080/index.html</code>. This also resolves correctly once hosted
+        on GitHub Pages or any other static host.
+      </p>
+      <p class="question-why">Details: ${escapeHtml(initError ? initError.message : 'unknown error')}</p>
+    </div>
+  `;
 }
 
 function currentSection() {
@@ -295,7 +320,22 @@ function updateNavButtons(code) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  init();
+  const startBtn = document.getElementById('btn-start-survey');
+
+  startBtn.addEventListener('click', async () => {
+    startBtn.disabled = true;
+    startBtn.textContent = 'Loading…';
+    await initPromise;
+    startBtn.disabled = false;
+    startBtn.textContent = 'Start Survey';
+
+    document.getElementById('landing-view').hidden = true;
+    document.getElementById('wizard-view').hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (initError) renderInitError();
+    else renderPage();
+  });
 
   document.getElementById('btn-back').addEventListener('click', () => {
     if (pageIndex > 0) {
